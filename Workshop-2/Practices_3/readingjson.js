@@ -1,4 +1,4 @@
-var data = require('./persons.json');
+var data = require('./sample.json');
 
 for (var i = 0; i < data.length; i++) {
     console.log(data[i].name);
