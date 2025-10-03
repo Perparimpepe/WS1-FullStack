@@ -1,7 +1,7 @@
 var axios = require('axios');
 
 const promise = axios
-    .get('https://www.omdbapi.com/?t=star+wars&apikey=thewdb')
+    .get('http://www.omdbapi.com/?i=tt3896198&apikey=b163a364')
     .then( (response) => {
         const data = response.data;
         console.log(response.data);

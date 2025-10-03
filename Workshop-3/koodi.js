@@ -2,11 +2,11 @@ const { request } = require('express');
 var https = require('https');
 const path = require('path');
 
-// API KEY ei ole oikea, katso oikea
+
 var options = {
     hostname: 'www.omdbapi.com',
     // port: 443,
-    path: '/?ts=star+wars&apikey=thewdb',
+    path: '?i=tt3896198&apikey=b163a364',
     method: 'get'      
     }
 
