@@ -20,7 +20,7 @@ app.get('/guestbook', (req, res) => {
       return;
     }
     const messages = JSON.parse(data);
-    let html = `
+      let html = `
       <!DOCTYPE html>
       <html>
       <head>
@@ -28,7 +28,7 @@ app.get('/guestbook', (req, res) => {
       </head>
       <body>
         <h1 class="m-3">Guestbook</h1>
-        <table class="table table-striped m-3">
+        <table border="1">
           <thead>
             <tr>
               <th>ID</th>
