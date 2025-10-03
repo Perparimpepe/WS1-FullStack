@@ -1,8 +1,16 @@
 const express = require('express');
 const app = express();
+const ejs = require('ejs');
+
+app.set("views", __dirname);
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname));
+
+const fs = require('fs');
+const path = require('path');
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.render("index");
 });
 
 app.get('/guestbook', (req, res) => {
