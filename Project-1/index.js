@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/frontpage.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/guestbook', (req, res) => {
@@ -17,7 +17,6 @@ app.get('/guestbook', (req, res) => {
       <html>
       <head>
         <title>Guestbook</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
       </head>
       <body>
         <h1 class="m-3">Guestbook</h1>
