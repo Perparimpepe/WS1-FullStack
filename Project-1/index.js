@@ -6,8 +6,8 @@ const path = require('path');
 
 // Middleware
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views')); // <-- korjattu
-app.use(express.static(path.join(__dirname, 'public'))); // <-- staattiset tiedostot kuten CSS
+app.set('views', path.join(__dirname, 'views')); // Directory
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.get('/', (req, res) => {
@@ -25,7 +25,32 @@ app.get('/guestbook', (req, res) => {
 });
 
 app.get('/newmessage', (req, res) => {
-  res.send('New message page');
+    res.render('newmessage');
+});
+
+app.post('/newmessage', (req, res) => {
+    const { username, country, message } = req.body;
+
+    if (!username || !country || !message) {
+        return res.status(400).send('All fields are required');
+    }
+
+    // Read existing messages
+    const dataPath = path.join(__dirname, 'data.json');
+    const jsonData = fs.existsSync(dataPath) ? JSON.parse(fs.readFileSync(dataPath)) : [];
+
+    const newMsg = {
+        id: jsonData.length + 1,
+        username,
+        country,
+        message,
+        date: new Date().toISOString().split('T')[0] // YYYY-MM-DD format
+    };
+
+    jsonData.push(newMsg);
+    fs.writeFileSync(dataPath, JSON.stringify(jsonData, null, 2));
+
+    res.redirect('/guestbook'); // Get back to guest book
 });
 
 app.get('/ajaxmessage', (req, res) => {

@@ -33,5 +33,40 @@
     "country": "Uganda",
     "date": "Tue Jul 22 2003 08:53:21 GMT+0300 (FLE Daylight Time)",
     "message": "Anyone from Africa here?"
+  },
+  {
+    "id": 6,
+    "username": "James Bond",
+    "country": "UK",
+    "message": "Name is Bond, James Bond",
+    "date": "2025-10-06"
+  },
+  {
+    "id": 7,
+    "username": "Perparim Zhitia",
+    "country": "Albania",
+    "message": "Hello Fellow Knights",
+    "timestamp": "2025-10-06T13:18:03.595Z"
+  },
+  {
+    "id": 8,
+    "username": "PSTT",
+    "country": "bla bla",
+    "message": "wqeeqqe",
+    "date": "2025-10-06T13:31:02.338Z"
+  },
+  {
+    "id": 9,
+    "username": "sefwsf",
+    "country": "sfesfes",
+    "message": "fsefsef",
+    "date": "2025-10-06"
+  },
+  {
+    "id": 10,
+    "username": "efsf",
+    "country": "sfse",
+    "message": "fsfse",
+    "date": "2025-10-06"
   }
 ]
