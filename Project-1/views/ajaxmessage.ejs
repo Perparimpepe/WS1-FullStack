@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>New Message</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body>
+
+<%- include('partials/head') %>
+
+<<main class="container my-5">
+    <h2>Leave Ajax Message</h2>
+    <form id="ajaxForm">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" class="form-control" id="country" name="country" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+    <div id="results" class="mt-4"></div>
+</main>
+
+<%- include('partials/footer') %>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+document.getElementById("ajaxForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Stopping form from submitting normally
+
+    const formData = {
+        username: document.getElementById("username").value,
+        country: document.getElementById("country").value,
+        message: document.getElementById("message").value
+    };
+
+    // Sending data to server via fetch API
+    fetch("/ajaxmessage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        const resultDiv = document.getElementById("results");
+        // Displaying all messages in a table
+        resultDiv.innerHTML = ` 
+            <h3>Guestbook Messages</h3>
+            <table border="1" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Country</th>
+                        <th>Date</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${data.map(msg => `
+                        <tr>
+                            <td>${msg.id}</td>
+                            <td>${msg.username}</td>
+                            <td>${msg.country}</td>
+                            <td>${msg.date}</td>
+                            <td>${msg.message}</td>
+                        </tr>`).join('')}
+                </tbody>
+            </table>
+        `;
+    })
+    .catch(err => {
+        console.error("Error:", err);
+    });
+});
+</script>
+</body>
+</html>

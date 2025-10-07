@@ -7,7 +7,9 @@ const path = require('path');
 // Middleware
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); // Directory
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Routes
 app.get('/', (req, res) => {
@@ -43,8 +45,8 @@ app.post('/newmessage', (req, res) => {
         id: jsonData.length + 1,
         username,
         country,
+        date: new Date().toString(), // YYYY-MM-DD format
         message,
-        date: new Date().toISOString().split('T')[0] // YYYY-MM-DD format
     };
 
     jsonData.push(newMsg);
@@ -54,7 +56,40 @@ app.post('/newmessage', (req, res) => {
 });
 
 app.get('/ajaxmessage', (req, res) => {
-  res.send('Ajax message page');
+  res.render('ajaxmessage');
+});
+
+app.get('/api/messages', (req, res) => {
+  const dataPath = path.join(__dirname, 'data.json');
+  const jsonData = fs.existsSync(dataPath) ? JSON.parse(fs.readFileSync(dataPath)) : [];
+  res.json(jsonData);
+});
+
+app.post('/ajaxmessage', (req, res) => {
+    const { username, country, message } = req.body;
+
+    if (!username || !country || !message) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const dataPath = path.join(__dirname, 'data.json');
+    const jsonData = fs.existsSync(dataPath)
+        ? JSON.parse(fs.readFileSync(dataPath))
+        : [];
+
+    const newMsg = {
+        id: jsonData.length + 1,
+        username,
+        country,
+        date: new Date().toString(),
+        message
+    };
+
+    jsonData.push(newMsg);
+    fs.writeFileSync(dataPath, JSON.stringify(jsonData, null, 2));
+
+    // Send back the updated messages
+    res.json(jsonData);
 });
 
 // Käynnistys
